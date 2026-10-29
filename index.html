@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pufi Zburatorul</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; color: white;
+           background: linear-gradient(160deg, #2b1a5c 0%, #1e2a4a 55%, #0f3d5e 100%); min-height: 100vh; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    /* Partea de sus */
+    header { text-align: center; padding: 60px 0 30px; }
+    .pufi { width: 110px; height: 110px; margin: 0 auto 10px; border-radius: 50%; background: #9b5de5;
+            position: relative; animation: pluteste 1.6s ease-in-out infinite; }
+    .pufi::before { content: ""; position: absolute; top: 30px; left: 66px; width: 24px; height: 24px;
+                    border-radius: 50%; background: white; box-shadow: inset -7px 0 0 -2px black; }
+    .pufi::after { content: ""; position: absolute; top: 58px; left: 96px; border-left: 26px solid #ff9f1c;
+                   border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
+    @keyframes pluteste { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+    h1 { font-size: clamp(34px, 8vw, 56px); margin: 10px 0; color: #fff176; text-shadow: 0 4px 0 rgba(0,0,0,0.35); }
+    .slogan { font-size: 20px; opacity: 0.9; margin: 0 0 26px; }
+
+    .buton { display: inline-block; padding: 14px 34px; border-radius: 40px; border: none; font-size: 20px;
+             font-weight: bold; color: white; background: #ff9f1c; text-decoration: none; cursor: pointer;
+             box-shadow: 0 6px 0 #c76e00; }
+    .buton:hover { background: #ffb347; }
+    .buton:active { transform: translateY(4px); box-shadow: 0 2px 0 #c76e00; }
+
+    /* Sectiunea de descarcare */
+    .card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 20px; padding: 28px; margin: 30px 0; backdrop-filter: blur(6px); }
+    .card h2 { margin: 0 0 6px; font-size: 28px; }
+    .card .sub { margin: 0 0 20px; opacity: 0.8; }
+
+    /* Bara pentru alegerea sistemului */
+    .bara { display: flex; gap: 8px; background: rgba(0,0,0,0.3); padding: 6px; border-radius: 16px; }
+    .os { flex: 1; padding: 14px 6px; border: none; border-radius: 12px; font-size: 17px; font-weight: bold;
+          color: white; background: transparent; cursor: pointer; }
+    .os:hover { background: rgba(255,255,255,0.12); }
+    .os.activ { background: #9b5de5; }
+
+    .panou { margin-top: 24px; }
+    .panou .buton { margin-bottom: 8px; }
+    .mic { font-size: 14px; opacity: 0.75; margin: 6px 0 0; }
+    .mic a { color: #ffd166; }
+    ol { padding-left: 22px; line-height: 1.7; }
+    .avertisment { font-size: 14px; background: rgba(255,209,102,0.15); border-left: 4px solid #ffd166;
+                   padding: 10px 14px; border-radius: 8px; margin-top: 14px; }
+
+    footer { text-align: center; opacity: 0.6; font-size: 14px; padding: 20px 0 50px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="pufi"></div>
+      <h1>Pufi Zburatorul</h1>
+      <p class="slogan">Ajuta-l pe Pufi sa zboare printre coloane!</p>
+      <a class="buton" href="#descarcare">⬇ Descarca jocul</a>
+    </header>
+
+    <section class="card" id="descarcare">
+      <h2>Descarca jocul</h2>
+      <p class="sub">Pufi se joaca doar pe calculator. Alege sistemul tau, descarca-l si instaleaza-l. Pe Desktop apare pictograma cu Pufi.</p>
+
+      <div class="bara" id="bara">
+        <button class="os" data-os="windows">🪟 Windows</button>
+        <button class="os" data-os="mac">🍎 macOS</button>
+        <button class="os" data-os="linux">🐧 Linux</button>
+      </div>
+
+      <div class="panou">
+        <a class="buton" id="descarca" href="#" download>Descarca</a>
+        <p class="mic" id="altaVersiune"></p>
+        <ol id="pasi"></ol>
+        <div class="avertisment" id="avertisment"></div>
+      </div>
+    </section>
+
+    <footer>Facut de mine, cu mult Pufi 💜</footer>
+  </div>
+
+  <script>
+    // Aici sunt datele pentru fiecare sistem. Poti schimba textele cum vrei!
+    var sisteme = {
+      windows: {
+        eticheta: "Descarca pentru Windows",
+        fisier: "downloads/Pufi-Zburatorul-Windows-Setup.exe",
+        pasi: [
+          "Deschide fisierul descarcat (Pufi-Zburatorul-Windows-Setup.exe).",
+          "Asteapta cateva secunde: Pufi se instaleaza singur.",
+          "Pe Desktop apare pictograma <b>Pufi Zburatorul</b>.",
+          "Da dublu-clic pe ea si apasa <b>PLAY</b>!"
+        ],
+        avertisment: "Windows poate afisa un avertisment albastru. Apare pentru ca jocul nu are inca o semnatura oficiala. Instaleaza doar daca stii ca fisierul vine de pe acest site."
+      },
+      mac: {
+        eticheta: "Descarca pentru macOS",
+        fisier: "downloads/Pufi-Zburatorul-Mac.dmg",
+        pasi: [
+          "Deschide fisierul descarcat (Pufi-Zburatorul-Mac.dmg).",
+          "Trage pictograma <b>Pufi Zburatorul</b> in folderul <b>Applications</b>.",
+          "Daca vrei pictograma si pe Desktop, trage-o din Applications pe Desktop tinand apasate tastele <b>Option + Command</b>.",
+          "Prima data, da clic dreapta pe ea, alege <b>Open</b> si apasa <b>PLAY</b>!"
+        ],
+        avertisment: "macOS poate spune ca aplicatia e de la un dezvoltator necunoscut. Apare pentru ca jocul nu are inca o semnatura oficiala. Foloseste clic dreapta, apoi Open, doar daca stii ca fisierul vine de pe acest site."
+      },
+      linux: {
+        eticheta: "Descarca pentru Linux (AppImage)",
+        fisier: "downloads/Pufi-Zburatorul-Linux.AppImage",
+        alta: { text: "Ai Ubuntu sau Debian? Descarca ", eticheta: "varianta .deb", fisier: "downloads/Pufi-Zburatorul-Linux.deb" },
+        pasi: [
+          "Dupa descarcare, da clic dreapta pe fisier, apoi <b>Properties</b>, apoi <b>Permissions</b> si bifeaza <b>Allow executing as program</b>.",
+          "Da dublu-clic pe fisier: Pufi porneste.",
+          "Pentru varianta .deb: deschide-o cu managerul de aplicatii sau scrie in terminal <code>sudo apt install ./Pufi-Zburatorul-Linux.deb</code>. Pufi apare apoi in meniul de aplicatii, de unde il poti pune pe Desktop.",
+          "Apasa <b>PLAY</b>!"
+        ],
+        avertisment: "Pe unele versiuni de Linux, AppImage-urile au nevoie de pachetul FUSE. Daca nu porneste, cere ajutorul unui adult sau foloseste varianta .deb."
+      }
+    };
+
+    var butoane = document.querySelectorAll(".os");
+
+    function alege(nume) {
+      var s = sisteme[nume];
+      butoane.forEach(function (b) { b.classList.toggle("activ", b.dataset.os === nume); });
+
+      var d = document.getElementById("descarca");
+      d.textContent = "⬇ " + s.eticheta;
+      d.href = s.fisier;
+
+      var alta = document.getElementById("altaVersiune");
+      alta.innerHTML = s.alta
+        ? s.alta.text + "<a href='" + s.alta.fisier + "' download>" + s.alta.eticheta + "</a>."
+        : "";
+
+      document.getElementById("pasi").innerHTML = s.pasi.map(function (p) { return "<li>" + p + "</li>"; }).join("");
+      document.getElementById("avertisment").innerHTML = s.avertisment;
+    }
+
+    butoane.forEach(function (b) {
+      b.addEventListener("click", function () { alege(b.dataset.os); });
+    });
+
+    // Alege automat sistemul pe care esti acum
+    var info = (navigator.userAgent + " " + (navigator.platform || "")).toLowerCase();
+    var implicit = "windows";
+    if (info.indexOf("mac") !== -1) implicit = "mac";
+    else if (info.indexOf("linux") !== -1 && info.indexOf("android") === -1) implicit = "linux";
+    alege(implicit);
+  </script>
+</body>
+</html>
